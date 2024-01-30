@@ -1,36 +1,29 @@
 #!/usr/bin/python3
+
 from sys import argv
+import math
 
-def factorize(num):
-    if num % 2 == 0:
-        return (2, num // 2)
-
-    for i in range(3, int(num**0.5) + 1, 2):
-        if num % i == 0:
-            factor = num // i
-            for j in range(3, int(factor**0.5) + 1, 2):
-                if factor % j == 0 or i % j == 0:
-                    break
-            else:
-                return (i, factor)
-
-# Check if a file is provided as an argument
-if len(argv) != 2:
-    print("Usage: {} <file>".format(argv[0]))
-    exit(1)
-
-input_file = argv[1]
-
-try:
-    with open(input_file) as f:
+def factor():
+    with open(argv[1]) as f:
         for line in f:
-            num = int(line.strip())
-            factors = factorize(num)
-            print("{}={}*{}".format(num, factors[0], factors[1]))
+            num = int(line)
+            print("{:d}=".format(num), end="")
+            
+            if num % 2 == 0:
+                print("{}*2".format(num//2))
+                continue
+            
+            sqn = int(math.sqrt(num))
+            if sqn % 2 == 0:
+                sqn += 1
+            
+            i = 3
+            while i <= sqn:
+                if num % i == 0:
+                    print("{}*{}".format(i, num//i))
+                    break
+                i += 2
+            else:
+                print("{}={}*1".format(num, num))
 
-except FileNotFoundError:
-    print("File not found: {}".format(input_file))
-    exit(1)
-except ValueError:
-    print("Invalid number in the file.")
-    exit(1)
+factor()
