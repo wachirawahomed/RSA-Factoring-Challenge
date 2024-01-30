@@ -41,9 +41,12 @@ def factor():
                 i += 2
 
             if i <= sqn:
-                print("{}*{}".format(i, num//i))
+                factor1 = num // i
+                factor2 = i
+                print("{}*{}".format(factor1, factor2))
             else:
                 print("{}={}*1".format(num, num))
 
 
-factor()
+if __name__ == "__main__":
+    factor()
